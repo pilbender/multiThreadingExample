@@ -16,6 +16,8 @@ public class App {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		BeanFactory beanFactory = applicationContext;
 
+		AsynchronousBean asynchronousBean = (AsynchronousBean) beanFactory.getBean("asynchronousBean");
+
         logger.info("*** Multi-Threading Example Project ***");
 	}
 }
