@@ -1,0 +1,7 @@
+target
+nb-configuration.xml
+dependency-reduced-pom.xml
+/.idea
+/multiThreadingExample.iml
+/multiThreadingExample.ipr
+/multiThreadingExample.iws
