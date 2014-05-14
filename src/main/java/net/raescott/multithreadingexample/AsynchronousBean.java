@@ -4,18 +4,18 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * * @author Richard Scott Smith <scott.smith@isostech.com>
- * */
-@Async
+  * @author Richard Scott Smith <scott.smith@isostech.com>
+  */
 @Component
 public class AsynchronousBean {
 
-	int counter;
+	private int counter;
 
 	public AsynchronousBean() {
 		counter = 0;
 	}
 
+	@Async
 	public void increment() throws InterruptedException {
 		Thread.sleep(1000);
 		++counter;

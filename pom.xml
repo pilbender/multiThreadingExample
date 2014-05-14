@@ -12,7 +12,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<aspectj.version>1.7.2</aspectj.version>
+		<aspectj.version>1.8.0</aspectj.version>
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -20,6 +20,7 @@
 	</properties>
 
 	<dependencies>
+
 		<!-- General dependencies for standard applications -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -47,6 +48,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+
 		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -69,6 +71,28 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -127,6 +151,31 @@
 				</executions>
 			</plugin>
 			-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<!--Added for AspectJ @Transactional-->
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+						<configuration>
+							<source>1.7</source>
+							<target>1.7</target>
+							<!--Added for AspectJ @Transactional-->
+							<aspectLibraries>
+								<aspectLibrary>
+									<groupId>org.springframework</groupId>
+									<artifactId>spring-aspects</artifactId>
+								</aspectLibrary>
+							</aspectLibraries>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

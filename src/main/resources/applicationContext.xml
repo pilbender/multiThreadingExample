@@ -3,11 +3,16 @@
 	   xmlns:aop="http://www.springframework.org/schema/aop" 
 	   xmlns:context="http://www.springframework.org/schema/context" 
 	   xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd">
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+">
     <!--
         This will automatically locate any and all property files you have
         within your classpath, provided they fall under the META-INF/spring
@@ -22,5 +27,15 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<context:exclude-filter expression=".*_Roo_.*" type="regex"/>
 		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
 	</context:component-scan>
+
+	<aop:aspectj-autoproxy/>
+
+	<task:executor
+			id="executorWithPoolSizeRange"
+			pool-size="5-25"
+			queue-capacity="100" />
+
+	<bean id="asynchronousBean1" class="net.raescott.multithreadingexample.AsynchronousBean" />
+	<bean id="asynchronousBean2" class="net.raescott.multithreadingexample.AsynchronousBean" />
 
 </beans>
