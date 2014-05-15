@@ -161,6 +161,8 @@
 				</executions>
 			</plugin>
 			-->
+			<!-- Needed for @Async to be picked up along with Spring configuration changes in the context.
+			This can be commented out if Spring Proxy mode is used. -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>

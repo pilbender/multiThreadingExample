@@ -28,9 +28,17 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
 	</context:component-scan>
 
+	<!-- For AspectJ, also enable the plugin in the pom.xml -->
+	<!-- Only needed if AspectJ is used -->
 	<aop:aspectj-autoproxy/>
 
-	<task:annotation-driven/>
+	<!-- AspectJ is the default so if it is omitted, it will be used. Don't forget the autoproxy is needed as well.
+	Replace "aspectj" with "proxy" to use Spring Proxies.  Autoproxy is not needed with Spring Proxies. -->
+	<!-- There is a bug in aspectj or something, but when you put the mode in it does not work!!  For Spring Proxies,
+	it is fine!! -->
+	<!-- <task:annotation-driven mode="aspectj" /> Does not work!! -->
+	<!--<task:annotation-driven mode="proxy" />-->
+	<task:annotation-driven />
 
 	<task:executor
 			id="executorWithPoolSizeRange"
