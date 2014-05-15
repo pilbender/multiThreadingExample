@@ -31,6 +31,7 @@ public class App {
 			asynchronousBean1.increment();
 			asynchronousBean2.increment();
 			calendar.setTimeInMillis(System.currentTimeMillis());
+			Thread.sleep(1000);
 			logger.info("Time Check {}: {}", i, calendar.getTime());
 			logger.info("asynchronousBean: {}", asynchronousBean);
 			logger.info("asynchronousBean1: {}", asynchronousBean1);

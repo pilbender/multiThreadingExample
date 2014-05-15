@@ -30,6 +30,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<aop:aspectj-autoproxy/>
 
+	<task:annotation-driven/>
+
 	<task:executor
 			id="executorWithPoolSizeRange"
 			pool-size="5-25"
