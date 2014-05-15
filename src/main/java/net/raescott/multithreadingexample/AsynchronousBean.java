@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
   * @author Richard Scott Smith <scott.smith@isostech.com>
   */
 @Component
+//@EnableAspectJAutoProxy
 public class AsynchronousBean {
 
 	private int counter;
