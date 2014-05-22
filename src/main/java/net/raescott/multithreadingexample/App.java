@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Multi-Threading Example Project
@@ -16,7 +17,7 @@ public class App {
 
 	private static final int ITERATIONS = 3;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		BeanFactory beanFactory = applicationContext;
 
@@ -65,6 +66,31 @@ public class App {
 			logger.info("runnableObject1: {}", runnableObject1);
 			logger.info("runnableObject2: {}", runnableObject2);
 		}
+
+		logger.info("Using Wait and Notify, the old methodology");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
+
+		logger.info("Demonstration of the new Future Interface with out Spring");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
+		FutureObject futureObject = new FutureObject();
+		//FutureTask<>
+		for (int i = 0; i < ITERATIONS; ++i) {
+			//futureObject.
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			Thread.sleep(1000);
+			logger.info("Time Check {}: {}", i, calendar.getTime());
+			logger.info("FutureObject status: {}", futureObject.get());
+		}
+
+		logger.info("Countdown Latch");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
+
+		logger.info("Executor Framework");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
 
 		logger.info("*** Multi-Threading Example Project ***");
 	}
