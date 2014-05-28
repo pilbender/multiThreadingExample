@@ -10,15 +10,19 @@ public class RunnableObject implements Runnable {
 	private static final Logger logger = LoggerFactory.getLogger(RunnableObject.class);
 
 	private int counter;
+	private int iterations;
 
-	public RunnableObject() {
+	public RunnableObject(int iterations) {
 		counter = 0;
+		this.iterations = iterations;
 	}
 	
 	@Override
 	public void run() {
 		try {
-			increment();
+			for (int i = 0; i < iterations; ++i) {
+				increment();
+			}
 		} catch (InterruptedException e) {
 			logger.error(String.valueOf(e.getStackTrace()));
 		}

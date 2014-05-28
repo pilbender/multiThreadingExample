@@ -8,6 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Multi-Threading Example Project
@@ -29,12 +31,13 @@ public class App {
 
         logger.info("*** Multi-Threading Example Project ***");
 
-		logger.info("Using the @Async Spring Bean managed annotation");
+		logger.info("*** Using the @Async Spring Bean managed annotation ***");
 		logger.info("Each of the 3 methods has a 1 second delay so if it does not work,");
 		logger.info("4 seconds will pass between time checks.  If it works, only 1 second will pass.");
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		logger.info("Start time: {}", calendar.getTime());
 		for (int i = 0; i < ITERATIONS; ++i) {
+			// TODO: Fix this so it's a properly long running thread.
 			asynchronousBean.increment();
 			asynchronousBean1.increment();
 			asynchronousBean2.increment();
@@ -46,19 +49,18 @@ public class App {
 			logger.info("asynchronousBean2: {}", asynchronousBean2);
 		}
 
-		logger.info("Using the old Runnable interface");
+		logger.info("*** Using the old Runnable interface ***");
 
-		RunnableObject runnableObject = new RunnableObject();
-		RunnableObject runnableObject1 = new RunnableObject();
-		RunnableObject runnableObject2 = new RunnableObject();
+		RunnableObject runnableObject = new RunnableObject(ITERATIONS);
+		RunnableObject runnableObject1 = new RunnableObject(ITERATIONS);
+		RunnableObject runnableObject2 = new RunnableObject(ITERATIONS);
 
 		calendar.setTimeInMillis(System.currentTimeMillis());
+		new Thread(runnableObject).start();
+		new Thread(runnableObject1).start();
+		new Thread(runnableObject2).start();
 		logger.info("Start time: {}", calendar.getTime());
 		for (int i = 0; i < ITERATIONS; ++i) {
-			Thread thread = new Thread();
-			new Thread(runnableObject).start();
-			new Thread(runnableObject1).start();
-			new Thread(runnableObject2).start();
 			calendar.setTimeInMillis(System.currentTimeMillis());
 			Thread.sleep(1000);
 			logger.info("Time Check {}: {}", i, calendar.getTime());
@@ -67,11 +69,33 @@ public class App {
 			logger.info("runnableObject2: {}", runnableObject2);
 		}
 
-		logger.info("Using Wait and Notify, the old methodology");
+		logger.info("*** Using Wait and Notify, the old methodology ***");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
+		// TODO: implement me
+
+		logger.info("*** Executor Framework ***");
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		logger.info("Start time: {}", calendar.getTime());
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(runnableObject);
+		executorService.execute(runnableObject1);
+		executorService.execute(runnableObject2);
+		for (int i = 0; i < ITERATIONS; ++i) {
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			Thread.sleep(1000);
+			logger.info("Time Check {}: {}", i, calendar.getTime());
+			logger.info("runnableObject: {}", runnableObject);
+			logger.info("runnableObject1: {}", runnableObject1);
+			logger.info("runnableObject2: {}", runnableObject2);
+		}
+		executorService.shutdown(); // Must call for the JVM to exit
+
+		logger.info("*** Countdown Latch ***");
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		logger.info("Start time: {}", calendar.getTime());
 
-		logger.info("Demonstration of the new Future Interface with out Spring");
+		logger.info("*** Demonstration of the new Future Interface with out Spring ***");
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		logger.info("Start time: {}", calendar.getTime());
 		FutureObject futureObject = new FutureObject();
@@ -83,14 +107,6 @@ public class App {
 			logger.info("Time Check {}: {}", i, calendar.getTime());
 			logger.info("FutureObject status: {}", futureObject.get());
 		}
-
-		logger.info("Countdown Latch");
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		logger.info("Start time: {}", calendar.getTime());
-
-		logger.info("Executor Framework");
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		logger.info("Start time: {}", calendar.getTime());
 
 		logger.info("*** Multi-Threading Example Project ***");
 	}
