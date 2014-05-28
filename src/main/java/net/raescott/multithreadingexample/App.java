@@ -77,7 +77,8 @@ public class App {
 		logger.info("*** Executor Framework ***");
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		logger.info("Start time: {}", calendar.getTime());
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		// We need at least 3 threads in the pool to execute them all at once.
+		ExecutorService executorService = Executors.newFixedThreadPool(3);
 		executorService.execute(runnableObject);
 		executorService.execute(runnableObject1);
 		executorService.execute(runnableObject2);
